@@ -51,3 +51,15 @@ def vector(file, list):
 codon_file = open('data/codons.txt', 'r')
 human_file = open('data/homosapien_genes.txt', 'r')
 ecoli_file = open('data/e.coli_genes.txt', 'r')
+
+codon_list = []
+for line in codon_file:
+    line = line.strip('\n')
+    codon_list.append(line)
+
+print(vector(human_file, codon_list))
+print(vector(ecoli_file, codon_list))
+
+codon_file.close()
+human_file.close()
+ecoli_file.close()
