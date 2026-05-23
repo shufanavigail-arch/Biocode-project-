@@ -1,3 +1,8 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+from sklearn import datasets
+from mpl_toolkits.mplot3d import Axes3D
 
 def vector(file, list):
     codon_dict = {}
@@ -57,9 +62,54 @@ for line in codon_file:
     line = line.strip('\n')
     codon_list.append(line)
 
-print(vector(human_file, codon_list))
+human_data = vector(human_file, codon_list)
+ecoli_data = vector(ecoli_file, codon_list)
+#print(human_data)
 print('\n')
-print(vector(ecoli_file, codon_list))
+#print(ecoli_data)
+
+data = human_data + ecoli_data
+print(data)
+
+human_len = len(human_data)
+ecoli_len = len(ecoli_data)
+#print(human_len)
+#print(ecoli_len)
+
+pca= PCA(n_components=50)
+
+
+
+data_pca = pca.fit_transform(data)
+
+
+
+pc_x = 1
+pc_y = 5
+pc_z =8
+ 
+x = data_pca[:, pc_x-1]
+y = data_pca[:, pc_y-1]
+z = data_pca[:, pc_z-1]
+
+
+fig = plt.figure()
+ax = fig.add_subplot(projection='3d')
+
+ax.scatter(x[:human_len], y[:human_len], c='blue', edgecolor='k')
+ax.scatter(x[human_len:], y[human_len:], c='red', edgecolor='k')
+
+ax.scatter(x[:human_len], y[:human_len], z[:human_len], c='blue', edgecolor='k')
+ax.scatter(x[human_len:], y[human_len:], z[human_len:], c='red', edgecolor='k')
+
+
+
+ax.set_xlabel('Principal Component 1')
+ax.set_ylabel('Principal Component 2')
+ax.set_zlabel('Principal Component 3')
+ax.set_title('PCA of Codon Usage')
+plt.show()
+
 
 codon_file.close()
 human_file.close()
