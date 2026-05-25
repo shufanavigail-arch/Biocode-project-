@@ -10,7 +10,6 @@ def vector(file, list):
     codon_dict = {}    # Dictionary to store codon frequencies
     database = []    # Stores frequency vectors for all genes
     code_part = ""
-
     for line in file:
         line = line.strip()
         if line[0] != '>':
