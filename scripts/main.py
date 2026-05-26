@@ -118,6 +118,30 @@ ax.set_zlabel('Principal Component 3')
 ax.set_title('PCA of Codon Usage')
 plt.show()
 
+labels = []
+for i in range(int(human_len)):
+    labels.append('human')
+for i in range(int(ecoli_len)):
+    labels.append('ecoli')
+
+train_data, test_data, train_labels, test_labels = train_test_split(data, labels, test_size=0.2, random_state=42)
+accurate_count = 0
+lda = LDA(n_components=1)
+lda.fit(train_data, train_labels)
+predictions = lda.predict(test_data)
+for i in range (len(predictions)):
+    if predictions[i] == test_labels[i]:
+        accurate_count += 1
+sim_per = accurate_count/len(test_labels)*100
+print('The accuracy percentage between the predictions and the test labels is: ' + str(sim_per) + '%')
+print('The predictions are:' )
+print(predictions)
+print('The actual labels are:')
+print(test_labels)
+
+
+
+
 
 #close files
 codon_file.close()
