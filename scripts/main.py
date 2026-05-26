@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn import datasets
 from mpl_toolkits.mplot3d import Axes3D
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+from sklearn.model_selection import train_test_split
+
 #function that creates a vector of codon frequencies for each gene in the file
 def vector(file, list):
 
