@@ -4,12 +4,16 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn import datasets
 from mpl_toolkits.mplot3d import Axes3D
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+from sklearn.model_selection import train_test_split
+
 #function that creates a vector of codon frequencies for each gene in the file
 def vector(file, list):
 
     codon_dict = {}    # Dictionary to store codon frequencies
     database = []    # Stores frequency vectors for all genes
     code_part = ""
+
     for line in file:
         line = line.strip()
         if line[0] != '>':
@@ -66,7 +70,7 @@ for line in codon_file:
     codon_list.append(line)
 
 #call vector function for both human and ecoli files and print results
-print(vector(human_file, codon_list))
+#print(vector(human_file, codon_list))
 human_data = vector(human_file, codon_list)
 ecoli_data = vector(ecoli_file, codon_list)
 #print('\n')
@@ -113,6 +117,30 @@ ax.set_ylabel('Principal Component 2')
 ax.set_zlabel('Principal Component 3')
 ax.set_title('PCA of Codon Usage')
 plt.show()
+
+labels = []
+for i in range(int(human_len)):
+    labels.append('human')
+for i in range(int(ecoli_len)):
+    labels.append('ecoli')
+
+train_data, test_data, train_labels, test_labels = train_test_split(data, labels, test_size=0.2, random_state=42)
+accurate_count = 0
+lda = LDA(n_components=1)
+lda.fit(train_data, train_labels)
+predictions = lda.predict(test_data)
+for i in range (len(predictions)):
+    if predictions[i] == test_labels[i]:
+        accurate_count += 1
+sim_per = accurate_count/len(test_labels)*100
+print('The accuracy percentage between the predictions and the test labels is: ' + str(sim_per) + '%')
+print('The predictions are:' )
+print(predictions)
+print('The actual labels are:')
+print(test_labels)
+
+
+
 
 
 #close files
