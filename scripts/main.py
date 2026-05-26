@@ -10,6 +10,7 @@ def vector(file, list):
     codon_dict = {}    # Dictionary to store codon frequencies
     database = []    # Stores frequency vectors for all genes
     code_part = ""
+
     for line in file:
         line = line.strip()
         if line[0] != '>':
@@ -66,7 +67,7 @@ for line in codon_file:
     codon_list.append(line)
 
 #call vector function for both human and ecoli files and print results
-print(vector(human_file, codon_list))
+#print(vector(human_file, codon_list))
 human_data = vector(human_file, codon_list)
 ecoli_data = vector(ecoli_file, codon_list)
 #print('\n')
