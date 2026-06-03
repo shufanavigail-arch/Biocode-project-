@@ -60,7 +60,7 @@ def vector(file, list):
             
 #open files
 codon_file = open('data/codons.txt', 'r')
-human_file = open('data/homosapien_genes1.txt', 'r')
+Bacillus_file = open('data/Bacillus_subtilis_genes.txt', 'r')
 ecoli_file = open('data/e.coli_genes1.txt', 'r')
 
 #create list of codons from codon file
@@ -71,15 +71,16 @@ for line in codon_file:
 
 #call vector function for both human and ecoli files and print results
 #print(vector(human_file, codon_list))
-human_data = vector(human_file, codon_list)
+
+Bacillus_data = vector(Bacillus_file, codon_list)
 ecoli_data = vector(ecoli_file, codon_list)
 #print('\n')
 #print(ecoli_data)
 
-data = human_data + ecoli_data
-#print(data)
+data = Bacillus_data + ecoli_data
 
-human_len = len(human_data)
+
+Bacillus_len = len(Bacillus_data)
 ecoli_len = len(ecoli_data)
 #print(human_len)
 #print(ecoli_len)
@@ -92,9 +93,9 @@ data_pca = pca.fit_transform(data)
 
 
 
-pc_x = 2
-pc_y = 3
-pc_z = 1
+pc_x = 1
+pc_y = 2
+pc_z = 3
  
 x = data_pca[:, pc_x-1]
 y = data_pca[:, pc_y-1]
@@ -104,11 +105,11 @@ z = data_pca[:, pc_z-1]
 fig = plt.figure()
 ax = fig.add_subplot(projection='3d')
 
-ax.scatter(x[:human_len], y[:human_len], c='blue', edgecolor='k')
-ax.scatter(x[human_len:], y[human_len:], c='red', edgecolor='k')
+#ax.scatter(x[:human_len], y[:human_len], c='blue', edgecolor='k')
+#ax.scatter(x[human_len:], y[human_len:], c='red', edgecolor='k')
 
-ax.scatter(x[:human_len], y[:human_len], z[:human_len], c='blue', edgecolor='k')
-ax.scatter(x[human_len:], y[human_len:], z[human_len:], c='red', edgecolor='k')
+ax.scatter(x[:ecoli_len], y[:ecoli_len], z[:ecoli_len], c='blue', edgecolor='k')
+ax.scatter(x[ecoli_len:], y[ecoli_len:], z[ecoli_len:], c='red', edgecolor='k')
 
 
 
@@ -119,8 +120,8 @@ ax.set_title('PCA of Codon Usage')
 plt.show()
 
 labels = []
-for i in range(int(human_len)):
-    labels.append('human')
+for i in range(int(Bacillus_len)):
+    labels.append('bacillus')
 for i in range(int(ecoli_len)):
     labels.append('ecoli')
 
@@ -142,5 +143,5 @@ print(test_labels)
 
 #close files
 codon_file.close()
-human_file.close()
+Bacillus_file.close()
 ecoli_file.close()
