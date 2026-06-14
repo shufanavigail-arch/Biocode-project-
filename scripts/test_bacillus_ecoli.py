@@ -113,9 +113,9 @@ ax.scatter(x[ecoli_len:], y[ecoli_len:], z[ecoli_len:], c='red', edgecolor='k')
 
 
 
-ax.set_xlabel('Principal Component 1')
-ax.set_ylabel('Principal Component 2')
-ax.set_zlabel('Principal Component 3')
+ax.set_xlabel('Principal Component %d' % pc_x)
+ax.set_ylabel('Principal Component %d' % pc_y)
+ax.set_zlabel('Principal Component %d' % pc_z)
 ax.set_title('PCA of Codon Usage')
 plt.show()
 

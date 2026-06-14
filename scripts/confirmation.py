@@ -6,6 +6,10 @@ from sklearn import datasets
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from sklearn.model_selection import train_test_split
+import random
+from sklearn.neighbors import KNeighborsClassifier
+
+
 
 #function that creates a vector of codon frequencies for each gene in the file
 def vector(file, list):
@@ -55,9 +59,24 @@ def vector(file, list):
 
     return database
 
-  
+def confirm(start, end, size):
+    big_list = []
+    for i in range(size):
+        list = []
+        for j in range(64):
+            list.append(0)
+        for u in range(0,64):
+            list[u] = random.randrange(0, 10)
+        for o in range(start, end):
+            list[o] = random.randrange(10,50)
+        total = sum(list)
+        list = [x/total for x in list]
+            # print(list)
+        big_list.append(list)
+    return big_list
         
-            
+
+check = True
 #open files
 codon_file = open('data/codons.txt', 'r')
 human_file = open('data/homosapien_genes1.txt', 'r')
@@ -71,9 +90,14 @@ for line in codon_file:
 
 #call vector function for both human and ecoli files and print results
 #print(vector(human_file, codon_list))
-human_data = vector(human_file, codon_list)
-ecoli_data = vector(ecoli_file, codon_list)
+if check == False:
+    human_data = vector(human_file, codon_list)
+    ecoli_data = vector(ecoli_file, codon_list)
+else:
+    human_data = confirm(0, 32, 1000)
+    ecoli_data = confirm(32, 64, 1000)
 #print('\n')
+
 
 
 data = human_data + ecoli_data
@@ -126,13 +150,19 @@ for i in range(int(ecoli_len)):
 
 train_data, test_data, train_labels, test_labels = train_test_split(data, labels, test_size=0.2, random_state=42)
 accurate_count = 0
+
+
 lda = LDA(n_components=1)
 lda.fit(train_data, train_labels)
+
 predictions = lda.predict(test_data)
+
+
 for i in range (len(predictions)):
     if predictions[i] == test_labels[i]:
         accurate_count += 1
 sim_per = accurate_count/len(test_labels)*100
+
 print('The accuracy percentage between the predictions and the test labels is: ' + str(sim_per) + '%')
 print('The predictions are:' )
 print(predictions)
