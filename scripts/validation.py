@@ -99,7 +99,6 @@ else:
 #print('\n')
 
 
-
 data = human_data + ecoli_data
 #print(data)
 

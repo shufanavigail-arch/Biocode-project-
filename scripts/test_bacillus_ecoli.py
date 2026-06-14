@@ -93,8 +93,8 @@ data_pca = pca.fit_transform(data)
 
 
 
-pc_x = 1
-pc_y = 2
+pc_x = 2
+pc_y = 5
 pc_z = 3
  
 x = data_pca[:, pc_x-1]
